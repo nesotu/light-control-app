@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ライト受信側</title>
+</head>
+<body>
+<h1>ライト受信中...</h1>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="./firebase-config.js"></script>
+<script>
+let stream;
+navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+.then(s => {
+  stream = s;
+  const track = stream.getVideoTracks()[0];
+  db.ref("light").on("value", snap => {
+    if (snap.val() === "on") {
+      track.applyConstraints({ advanced: [{ torch: true }] }).catch(console.error);
+    } else {
+      track.applyConstraints({ advanced: [{ torch: false }] }).catch(console.error);
+    }
+  });
+})
+.catch(err => {
+  document.body.innerHTML = "ライトのアクセス許可が必要です";
+});
+</script>
+</body>
+</html>

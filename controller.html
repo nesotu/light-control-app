@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ライト操作側</title>
+</head>
+<body>
+<h1>ライト操作</h1>
+<button onclick="turnOn()">ON</button>
+<button onclick="turnOff()">OFF</button>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="./firebase-config.js"></script>
+<script>
+function turnOn() {
+  db.ref("light").set("on");
+}
+function turnOff() {
+  db.ref("light").set("off");
+}
+</script>
+</body>
+</html>
